@@ -175,8 +175,9 @@ class Image {
                 $post_object->id
             );
 
+			// TODO: Set to WPP2
             return $this->render(
-                $cached,
+                $this->use_photon($post_object->id,$size),
                 $size,
                 is_array($classes) ? implode(' ', $classes) : 'wpp-thumbnail wpp_' . $source,
                 is_string($alt) ? $alt : ''
@@ -251,7 +252,7 @@ class Image {
                         }
                     endforeach;
 
-                    // Couldn't find a matching size so let's go with width/height combo instead 
+                    // Couldn't find a matching size so let's go with width/height combo instead
                     // (this should never happen but better safe than sorry!)
                     if ( null == $stock_size ) {
                         $stock_size = $size;
@@ -314,11 +315,27 @@ class Image {
         }
 
         return $this->render(
-            $thumb_url,
+             $this->use_photon($post_object->id,$size),
             $size,
             is_array($classes) ? implode(' ', $classes) : 'wpp-thumbnail wpp_' . $source,
             is_string($alt) ? $alt : ''
         );
+    }
+
+    private function use_photon($media_id,$size){
+
+    	if( is_ssl() ){
+    		$photon_base_url = "https://i0.wp.com/";
+
+	    }else{
+    		$photon_base_url = "http://i0.wp.com/";
+	    }
+
+    	$featured_img = parse_url( get_the_post_thumbnail_url( $media_id ) );
+
+    	$new_img = $photon_base_url.$featured_img['host'].$featured_img['path']."?resize=".$size[0].",".$size[1];
+
+    	return $new_img;
     }
 
     /**
@@ -584,9 +601,9 @@ class Image {
 
         // Return nothing if there aren't any $url parts or if the current host and $url host do not match.
         if (
-            ! isset($parse_url[1]) 
-            || empty($parse_url[1]) 
-            || ($this_host != $file_host) 
+            ! isset($parse_url[1])
+            || empty($parse_url[1])
+            || ($this_host != $file_host)
         ) {
             return false;
         }
@@ -631,7 +648,7 @@ class Image {
         $response = wp_remote_head($url, ['timeout' => 5, 'sslverify' => false]);
 
         if (
-            ! is_wp_error($response) 
+            ! is_wp_error($response)
             && in_array(wp_remote_retrieve_response_code($response), $accepted_status_codes)
         ) {
             require_once(ABSPATH . 'wp-admin/includes/file.php');
