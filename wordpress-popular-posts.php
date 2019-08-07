@@ -13,12 +13,12 @@
  * @package           WordPressPopularPosts
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Popular Posts
- * Plugin URI:        https://wordpress.org/plugins/wordpress-popular-posts/
- * Description:       A highly customizable widget that displays the most popular posts on your blog.
- * Version:           5.0.0
- * Author:            Hector Cabrera
- * Author URI:        https://cabrerahector.com/
+ * Plugin Name:       WPP with Photon Integration
+ * Plugin URI:        https://github.com/riobahtiar/wordpress-popular-posts/tree/rio/custom_cdn
+ * Description:       WordPress Popular Posts with Photon Integration. Original Version https://wordpress.org/plugins/wordpress-popular-posts/ by Hector Cabrera. Costumized by @riobahtiar
+ * Version:           0.0.1
+ * Author:            Rio Bahtiar
+ * Author URI:        https://rio.my.id
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wordpress-popular-posts
